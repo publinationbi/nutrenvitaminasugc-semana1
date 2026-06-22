@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nutren Vitaminas · Status Campanha UGC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --navy: #0A2E73;
+  --navy-deep: #061E50;
+  --navy-soft: #1B4FB0;
+  --orange: #F18A2F;
+  --orange-soft: #FFB770;
+  --cream: #FBF7EB;
+  --cream-deep: #F4EDD9;
+  --card: #FFFFFF;
+  --ink: #0F1B33;
+  --ink-soft: #4B5563;
+  --muted: #8A8676;
+  --border: #E8E2CC;
+  --green: #1F8F5C;
+  --green-soft: #DDF1E4;
+  --amber: #E5A535;
+  --amber-soft: #FCEACA;
+  --red: #C8463E;
+  --red-soft: #F8DCDA;
+  --shadow: 0 1px 2px rgba(10,46,115,.04), 0 8px 24px rgba(10,46,115,.06);
+  --shadow-lg: 0 20px 50px rgba(10,46,115,.10);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 28px 32px 80px;
+}
+
+/* ===== HERO ===== */
+.hero {
+  background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 55%, var(--navy-soft) 100%);
+  border-radius: 28px;
+  padding: 36px 40px 32px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  right: -120px; top: -120px;
+  width: 380px; height: 380px;
+  background: radial-gradient(circle, rgba(241,138,47,.55) 0%, rgba(241,138,47,0) 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  left: -80px; bottom: -180px;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 70%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--orange-soft);
+  margin-bottom: 18px;
+}
+.hero-eyebrow .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 0 4px rgba(241,138,47,.2);
+  animation: pulse 2.4s infinite;
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 4px rgba(241,138,47,.2); }
+  50% { box-shadow: 0 0 0 8px rgba(241,138,47,.05); }
+}
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: 52px;
+  font-weight: 500;
+  margin: 0 0 8px;
+  line-height: 1.02;
+  letter-spacing: -1px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--orange-soft);
+}
+.hero-sub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+.hero-sub p {
+  margin: 0;
+  font-size: 15px;
+  color: rgba(255,255,255,.78);
+  max-width: 640px;
+  line-height: 1.55;
+}
+.hero-sub p strong { color: #fff; font-weight: 600; }
+
+.week-nav {
+  display: flex;
+  gap: 6px;
+  margin-top: 26px;
+  padding: 6px;
+  background: rgba(0,0,0,.22);
+  border-radius: 14px;
+  width: fit-content;
+}
+.week-btn {
+  background: transparent;
+  border: 0;
+  color: rgba(255,255,255,.55);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .2s;
+  min-width: 48px;
+}
+.week-btn.active {
+  background: var(--orange);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(241,138,47,.4);
+}
+.week-btn:not(.active):not(:disabled):hover { color: #fff; background: rgba(255,255,255,.08); }
+.week-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+/* ===== SECTION HEADINGS ===== */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 40px 4px 16px;
+  gap: 24px;
+}
+.section-head .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--orange);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-head .label::before {
+  content: "";
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--orange);
+  display: inline-block;
+}
+.section-head h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 500;
+  margin: 4px 0 0;
+  color: var(--ink);
+  letter-spacing: -.5px;
+}
+.section-head h2 em { font-style: italic; color: var(--navy); }
+.section-head .hint { color: var(--muted); font-size: 13px; }
+
+/* ===== KPI ROW ===== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 8px;
+}
+.kpi {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 22px 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: transform .25s, box-shadow .25s;
+}
+.kpi:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.kpi-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.kpi-value {
+  font-family: 'Fraunces', serif;
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 1;
+  margin: 14px 0 6px;
+  color: var(--navy);
+  letter-spacing: -1.5px;
+}
+.kpi-sub {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.kpi-sub strong { color: var(--orange); font-weight: 600; }
+.kpi .delta {
+  position: absolute;
+  top: 22px; right: 24px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--green-soft);
+  color: var(--green);
+}
+.kpi.accent .kpi-value { color: var(--orange); }
+
+/* ===== TWO-COL ROW ===== */
+.row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.row-7-5 {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 16px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 26px 28px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+.card h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0 0 4px;
+  color: var(--ink);
+  letter-spacing: -.3px;
+}
+.card .sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+/* ===== GAUGE ===== */
+.gauge-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0 4px;
+  position: relative;
+}
+.gauge { width: 100%; max-width: 380px; position: relative; z-index: 1; }
+.gauge-value-overlay {
+  position: absolute;
+  top: 32%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  z-index: 2;
+  width: 100%;
+}
+.gauge-value-overlay .num {
+  font-family: 'Fraunces', serif;
+  font-size: 48px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1;
+  letter-spacing: -1.5px;
+}
+.gauge-value-overlay .cap {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+.gauge-value {
+  font-family: 'Fraunces', serif;
+  font-size: 60px;
+  font-weight: 500;
+  color: var(--navy);
+  line-height: 1;
+  margin-top: -56px;
+  text-align: center;
+  letter-spacing: -2px;
+}
+.gauge-caption {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--muted);
+  text-align: center;
+  font-weight: 600;
+  margin-top: 6px;
+}
+.gauge-legend {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 24px;
+  padding: 18px 4px 4px;
+  border-top: 1px dashed var(--border);
+}
+.gauge-legend > div { display: flex; flex-direction: column; gap: 4px; }
+.gauge-legend .ttl { font-size: 10.5px; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); font-weight: 600; }
+.gauge-legend .val { font-family: 'Fraunces', serif; font-size: 22px; color: var(--navy); }
+.gauge-legend .val.over { color: var(--orange); }
+.gauge-legend .sub { font-size: 11px; color: var(--ink-soft); }
+
+/* ===== WEEK DETAIL ===== */
+.week-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 4px;
+}
+.mini-stat {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+  background: var(--cream);
+  position: relative;
+}
+.mini-stat .label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.mini-stat .value {
+  font-family: 'Fraunces', serif;
+  font-size: 32px;
+  font-weight: 500;
+  margin: 8px 0 2px;
+  color: var(--navy);
+  line-height: 1;
+}
+.mini-stat .sub { font-size: 12px; color: var(--ink-soft); }
+.mini-stat.accent { background: linear-gradient(135deg, #FFF3E2 0%, #FFE6CC 100%); border-color: #FBD7AC; }
+.mini-stat.accent .value { color: var(--orange); }
+
+.adherence-bar {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+  color: #fff;
+}
+.adherence-bar .row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px;
+}
+.adherence-bar .row .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: .8; font-weight: 600; }
+.adherence-bar .row .val { font-family: 'Fraunces', serif; font-size: 22px; }
+.bar-track {
+  height: 8px;
+  background: rgba(255,255,255,.18);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--orange-soft), var(--orange));
+  border-radius: 99px;
+  transition: width 1s ease-out;
+}
+
+/* ===== TABS ===== */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  background: var(--cream);
+  padding: 4px;
+  border-radius: 12px;
+  width: fit-content;
+}
+.tab {
+  background: transparent;
+  border: 0;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 8px 14px;
+  border-radius: 9px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all .2s;
+}
+.tab.active { background: var(--navy); color: #fff; box-shadow: 0 4px 10px rgba(10,46,115,.18); }
+.tab:not(.active):hover { color: var(--navy); }
+
+/* ===== RANKING ===== */
+.ranking { display: flex; flex-direction: column; gap: 8px; max-height: 540px; overflow-y: auto; padding-right: 4px; }
+.rank-row {
+  display: grid;
+  grid-template-columns: 36px 1fr auto auto;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--cream);
+  transition: all .2s;
+  cursor: default;
+  border: 1px solid transparent;
+}
+.rank-row:hover { background: #fff; border-color: var(--border); transform: translateX(2px); }
+.rank-pos {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  color: var(--muted);
+}
+.rank-row.top-1 .rank-pos { color: var(--orange); font-size: 24px; }
+.rank-row.top-2 .rank-pos { color: var(--navy); }
+.rank-row.top-3 .rank-pos { color: var(--navy-soft); }
+.rank-handle { font-weight: 600; font-size: 13px; color: var(--ink); }
+.rank-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.rank-value {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--navy);
+  text-align: right;
+}
+.rank-bar-wrap { width: 80px; }
+.rank-bar {
+  width: 80px;
+  height: 6px;
+  background: var(--cream-deep);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.rank-bar .fill { height: 100%; background: linear-gradient(90deg, var(--navy-soft), var(--orange)); border-radius: 99px; }
+
+/* ===== STATUS GRID ===== */
+.filter-pills {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.fp {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 8px 14px;
+  border-radius: 99px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all .2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.fp .ct { background: #fff; padding: 1px 7px; border-radius: 99px; font-size: 11px; }
+.fp.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.fp.active .ct { background: rgba(255,255,255,.2); color: #fff; }
+.fp[data-status="em_dia"] .ct { color: var(--green); }
+.fp[data-status="parcial"] .ct { color: var(--amber); }
+.fp[data-status="atencao"] .ct { color: var(--red); }
+.fp[data-status="em_dia"].active { background: var(--green); border-color: var(--green); }
+.fp[data-status="parcial"].active { background: var(--amber); border-color: var(--amber); }
+.fp[data-status="atencao"].active { background: var(--red); border-color: var(--red); }
+
+.creators-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+.creator-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  transition: all .2s;
+  cursor: pointer;
+  position: relative;
+}
+.creator-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); background: #fff; }
+.creator-card .top {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px;
+}
+.creator-card .handle { font-weight: 600; font-size: 13px; color: var(--ink); }
+.status-pill {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 99px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.status-pill::before {
+  content: "";
+  width: 6px; height: 6px; border-radius: 50%;
+}
+.status-pill.em_dia { background: var(--green-soft); color: var(--green); }
+.status-pill.em_dia::before { background: var(--green); }
+.status-pill.parcial { background: var(--amber-soft); color: #9c6c0a; }
+.status-pill.parcial::before { background: var(--amber); }
+.status-pill.atencao { background: var(--red-soft); color: var(--red); }
+.status-pill.atencao::before { background: var(--red); }
+.creator-card .stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.creator-card .stats > div { text-align: center; }
+.creator-card .stats .v {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--navy);
+  line-height: 1;
+}
+.creator-card .stats .l { font-size: 9.5px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-top: 4px; font-weight: 600; }
+.creator-card .progress {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+.creator-card .progress .bar {
+  flex: 1;
+  height: 4px;
+  background: var(--cream-deep);
+  border-radius: 99px;
+  margin: 0 8px;
+  overflow: hidden;
+}
+.creator-card .progress .bar .fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--navy-soft), var(--orange));
+  border-radius: 99px;
+}
+
+/* ===== HIGHLIGHTS ===== */
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.highlight {
+  background: linear-gradient(135deg, #FFF7EC, #FCE3C4);
+  border: 1px solid #F6CFA1;
+  padding: 14px 16px;
+  border-radius: 14px;
+  position: relative;
+}
+.highlight .star { color: var(--orange); font-size: 14px; }
+.highlight .h { font-family: 'Fraunces', serif; color: var(--navy); font-size: 18px; font-weight: 600; margin: 6px 0 2px; }
+.highlight .s { font-size: 11.5px; color: var(--ink-soft); }
+
+/* ===== GAMIFICAÇÃO / PÓDIO ===== */
+.game-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.podium-card {
+  background: linear-gradient(160deg, #0F1B33 0%, #0A2E73 55%, #1B4FB0 110%);
+  color: #fff;
+  border-radius: 18px;
+  padding: 24px 26px 22px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+}
+.podium-card.sales {
+  background: linear-gradient(160deg, #5C2510 0%, #C95B1E 55%, #F18A2F 110%);
+}
+.podium-card::before {
+  content: "";
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(255,255,255,.10) 0%, rgba(255,255,255,0) 70%);
+  pointer-events: none;
+}
+.podium-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 6px;
+}
+.podium-head .pico {
+  font-size: 22px;
+  width: 38px; height: 38px;
+  background: rgba(255,255,255,.12);
+  border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.podium-card h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 22px;
+  margin: 0 0 4px;
+  color: #fff;
+  letter-spacing: -.3px;
+}
+.podium-card .ksub {
+  font-size: 12px; color: rgba(255,255,255,.62);
+  margin-bottom: 18px;
+}
+.podium-card .total-pill {
+  background: rgba(255,255,255,.14);
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.podium-3 {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1fr;
+  gap: 8px;
+  align-items: end;
+  margin: 14px 0 18px;
+  min-height: 180px;
+}
+.podium-step {
+  border-radius: 12px 12px 0 0;
+  padding: 12px 10px 14px;
+  text-align: center;
+  position: relative;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.10);
+  border-bottom: 0;
+}
+.podium-step.s1 {
+  background: linear-gradient(180deg, #F18A2F 0%, #C56514 100%);
+  height: 170px;
+  border: 0;
+  box-shadow: 0 -8px 20px rgba(241,138,47,.35);
+}
+.podium-card.sales .podium-step.s1 {
+  background: linear-gradient(180deg, #FFE0B5 0%, #FFB770 100%);
+  box-shadow: 0 -8px 20px rgba(255,255,255,.25);
+  color: #5C2510;
+}
+.podium-step.s2 { height: 130px; background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.08)); }
+.podium-step.s3 { height: 105px; background: linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.05)); }
+.podium-step.empty {
+  background: rgba(255,255,255,.05);
+  border: 1px dashed rgba(255,255,255,.15);
+}
+.podium-step.empty span { color: rgba(255,255,255,.4); font-size: 11px; }
+.medal {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1;
+  margin-bottom: 6px;
+  color: #fff;
+}
+.podium-step.s1 .medal { font-size: 38px; }
+.podium-card.sales .podium-step.s1 .medal { color: #5C2510; }
+.handle-name {
+  font-size: 12px;
+  font-weight: 700;
+  word-break: break-all;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.podium-step.s1 .handle-name { font-size: 13.5px; }
+.handle-val {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -.5px;
+}
+.podium-step.s1 .handle-val { font-size: 28px; }
+.podium-step .small { font-size: 10px; opacity: .75; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+.podium-rest {
+  border-top: 1px solid rgba(255,255,255,.10);
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.podium-row {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,.06);
+  border-radius: 10px;
+  font-size: 12.5px;
+  transition: background .2s;
+}
+.podium-row:hover { background: rgba(255,255,255,.12); }
+.podium-row .pos {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  color: rgba(255,255,255,.55);
+  text-align: center;
+}
+.podium-row .hndl { font-weight: 600; }
+.podium-row .vl {
+  font-family: 'Fraunces', serif;
+  font-size: 17px;
+  font-weight: 500;
+}
+.podium-empty-state {
+  text-align: center;
+  padding: 24px 16px;
+  color: rgba(255,255,255,.55);
+  font-size: 12.5px;
+  background: rgba(255,255,255,.05);
+  border-radius: 10px;
+}
+
+@media (max-width: 980px) {
+  .game-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== POSTS TABLE ===== */
+.posts-toolbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.posts-toolbar input, .posts-toolbar select {
+  border: 1px solid var(--border);
+  background: var(--cream);
+  font-family: inherit;
+  font-size: 12.5px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  color: var(--ink);
+  outline: none;
+}
+.posts-toolbar input:focus, .posts-toolbar select:focus { border-color: var(--navy-soft); background:#fff; }
+.posts-toolbar input { min-width: 220px; }
+.posts-count { margin-left: auto; font-size: 12px; color: var(--muted); }
+
+.posts-table-wrap { max-height: 480px; overflow: auto; border: 1px solid var(--border); border-radius: 14px; }
+.posts-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+.posts-table thead th {
+  position: sticky; top: 0; z-index: 2;
+  background: var(--cream);
+  text-align: left;
+  font-weight: 600;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--muted);
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.posts-table tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink);
+}
+.posts-table tbody tr:hover { background: var(--cream); }
+.posts-table tbody tr:last-child td { border-bottom: 0; }
+.posts-table .num { font-variant-numeric: tabular-nums; text-align: right; }
+.posts-table a { color: var(--navy); text-decoration: none; border-bottom: 1px dotted var(--navy-soft); }
+.posts-table a:hover { color: var(--orange); border-color: var(--orange); }
+.fmt-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: var(--cream-deep);
+  color: var(--ink-soft);
+}
+.fmt-badge.story { background: #E4F0FF; color: #1A4FB0; }
+.fmt-badge.reel { background: #FFE4E4; color: #C8463E; }
+.fmt-badge.video { background: #EADCFF; color: #6B3FB0; }
+.fmt-badge.feed { background: #FFF1D6; color: #B07A1A; }
+
+/* ===== FOOTER ===== */
+.footer {
+  margin-top: 48px;
+  padding: 24px 4px;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--muted);
+  font-size: 11.5px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.footer .right { display: flex; gap: 12px; align-items: center; }
+.footer .dot-orange { color: var(--orange); }
+
+/* ===== CHART CONTAINER ===== */
+.chart-box { position: relative; height: 280px; }
+.chart-box.tall { height: 320px; }
+.donut-box { height: 240px; }
+
+/* RESPONSIVE */
+@media (max-width: 980px) {
+  .container { padding: 20px 16px; }
+  .hero h1 { font-size: 36px; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .row-2, .row-7-5 { grid-template-columns: 1fr; }
+}
+
+/* ajuste: gamificação com 1 pódio ocupa a largura total com elegância */
+.game-grid.single { grid-template-columns: 1fr; }
+.bonus-line {
+  margin-top: 12px; padding: 11px 14px; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(31,143,92,.10), rgba(31,143,92,.02));
+  border: 1px solid var(--green-soft);
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.bonus-line .pill {
+  font-family: 'Fraunces', serif; font-size: 22px; color: var(--green); line-height: 1;
+}
+.bonus-line .txt { font-size: 11.5px; color: var(--ink-soft); line-height: 1.45; flex: 1; min-width: 200px; }
+.bonus-line .txt strong { color: var(--green); }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="hero-eyebrow">
+      <span class="dot"></span>
+      <span>PUBLI · NESTLÉ · STATUS REPORT</span>
+    </div>
+    <h1>Nutren <em>Vitaminas</em> · UGC</h1>
+    <div class="hero-sub">
+      <p>Acompanhamento de entrega da campanha de <strong>UGC</strong> com <strong><span id="heroCreators">50</span> influenciadores ativos</strong>, escopo individual de <strong>3 telas por semana</strong> ao longo de <strong>4 semanas</strong>. Consolidado de entregas por creator. Atualização <strong>semana a semana</strong>.</p>
+      <div style="text-align:right;">
+        <div style="font-size:10.5px; letter-spacing:2.5px; color: rgba(255,255,255,.5); font-weight:600;">FECHAMENTO S1</div>
+        <div id="heroData" style="font-family:'Fraunces',serif; font-size:28px; color:#fff; line-height:1.1;">21.JUN.2026</div>
+      </div>
+    </div>
+    <nav class="week-nav" id="weekNav"></nav>
+  </header>
+
+  <!-- ===== KPI ROW ===== -->
+  <div class="section-head">
+    <div>
+      <div class="label" id="labelSemana">Visão geral · semana 1 de 4</div>
+      <h2>Números <em>consolidados</em> da semana 1</h2>
+    </div>
+  </div>
+  <div class="kpi-grid" id="kpiGrid"></div>
+
+  <!-- ===== GAUGE + WEEK DETAIL ===== -->
+  <div class="section-head">
+    <div>
+      <div class="label">Termômetro de entrega</div>
+      <h2>Como estamos <em>vs.</em> o planejado</h2>
+    </div>
+    <div class="hint">escopo proporcional · 25% do total previsto por semana</div>
+  </div>
+  <div class="row-7-5">
+    <div class="card">
+      <h3>Aderência ao escopo de stories</h3>
+      <div class="sub" id="gaugeSub"></div>
+      <div class="gauge-wrap">
+        <svg class="gauge" viewBox="0 0 400 230">
+          <defs>
+            <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#C8463E"/>
+              <stop offset="35%" stop-color="#E5A535"/>
+              <stop offset="70%" stop-color="#1F8F5C"/>
+              <stop offset="100%" stop-color="#0A2E73"/>
+            </linearGradient>
+          </defs>
+          <path d="M 40 200 A 160 160 0 0 1 360 200" stroke="#EFE9D4" stroke-width="22" fill="none" stroke-linecap="round"/>
+          <path d="M 40 200 A 160 160 0 0 1 360 200" stroke="url(#gaugeGrad)" stroke-width="22" fill="none" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" id="gaugeArc"/>
+          <line id="gaugeNeedle" x1="200" y1="200" x2="200" y2="60" stroke="#0F1B33" stroke-width="3" stroke-linecap="round" opacity=".95"/>
+          <circle cx="200" cy="200" r="10" fill="#0F1B33"/>
+          <circle cx="200" cy="200" r="4" fill="#F18A2F"/>
+          <text x="40" y="222" font-family="Inter" font-size="10" fill="#8A8676" font-weight="600">0%</text>
+          <text x="195" y="34" font-family="Inter" font-size="10" fill="#8A8676" font-weight="600" text-anchor="middle">50%</text>
+          <text x="350" y="222" font-family="Inter" font-size="10" fill="#8A8676" font-weight="600">100%</text>
+        </svg>
+        <div class="gauge-value-overlay">
+          <div class="num" id="gaugeValue">33,0%</div>
+          <div class="cap">DO ESCOPO TOTAL</div>
+        </div>
+        <div class="gauge-legend">
+          <div>
+            <div class="ttl">Esperado até aqui</div>
+            <div class="val" id="gaugeExpVal">25,0%</div>
+            <div class="sub" id="gaugeExpSub">1 de 4 semanas · 150 stories</div>
+          </div>
+          <div style="text-align:right;">
+            <div class="ttl">Realizado</div>
+            <div class="val over" id="gaugeRealVal">33,0%</div>
+            <div class="sub" id="gaugeRealSub">198 stories no consolidado</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 id="weekDetailTitle">Semana 1 em detalhe</h3>
+      <div class="sub" id="weekDetailSub">escopo da janela: mínimo de 3 telas por creator (150 no total)</div>
+      <div class="week-detail-grid">
+        <div class="mini-stat">
+          <div class="label">Esperado na meta S1</div>
+          <div class="value" id="wdExpectedVal">150</div>
+          <div class="sub">telas previstas (3/creator)</div>
+        </div>
+        <div class="mini-stat">
+          <div class="label">Telas válidas entregues</div>
+          <div class="value" id="wdDeliveredVal">123</div>
+          <div class="sub">contam pro escopo (mín. 3)</div>
+        </div>
+        <div class="mini-stat accent">
+          <div class="label">Aderência</div>
+          <div class="value" id="wdAdhVal">82%</div>
+          <div class="sub" id="wdAdhSub">da meta da semana</div>
+        </div>
+        <div class="mini-stat">
+          <div class="label">Creators 100% no prazo</div>
+          <div class="value" id="wdOnTimeVal">36</div>
+          <div class="sub" id="wdOnTimeSub">de 50 ativos</div>
+        </div>
+      </div>
+
+      <div class="bonus-line" id="bonusLine"></div>
+
+      <div id="wdNote" style="margin-top: 14px; padding: 12px 14px; background: var(--cream); border-radius: 12px; border-left: 3px solid var(--orange); font-size: 12px; color: var(--ink-soft); line-height: 1.55;">
+        <strong style="color: var(--navy);">Lendo os números:</strong> o escopo da semana 1 prevê o mínimo de 3 telas por creator, <strong id="noteExpected">150</strong> telas no total. Dentro desse mínimo, entregamos <strong id="noteValidas">123</strong> telas, o que coloca a aderência da S1 em <strong id="noteAdh">82%</strong>. Além disso, somam-se <strong id="noteBonus">75</strong> telas <strong>bonificadas</strong>, acima do contratado: elas reforçam o volume total da campanha, mas não compõem o cálculo da % do escopo, que olha apenas o mínimo previsto por creator.
+      </div>
+      <div class="adherence-bar">
+        <div class="row">
+          <span class="lbl">Aderência S1 (stories vs. meta)</span>
+          <span class="val" id="wdAdhValBar">132%</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width: 0%;" id="adherenceFill"></div></div>
+      </div>
+
+      <div style="margin-top: 18px;">
+        <div class="label" style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); font-weight: 700;">&#9733; Destaques de volume</div>
+        <div class="highlights" id="highlights"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== GAMIFICACAO / PODIO ===== -->
+  <div class="section-head">
+    <div>
+      <div class="label">Gamificação · Pódio da campanha</div>
+      <h2>Quem está <em>disputando</em> o topo</h2>
+    </div>
+  </div>
+  <div class="game-grid">
+    <div class="podium-card" id="podiumEng">
+      <div class="podium-head">
+        <div>
+          <h3>Maior engajamento</h3>
+          <div class="ksub">creators que mais geraram interação na semana 1</div>
+        </div>
+        <div class="pico">&#128293;</div>
+      </div>
+      <div class="podium-3" id="podiumEngTop"></div>
+      <div class="podium-rest" id="podiumEngRest"></div>
+    </div>
+    <div class="podium-card" id="podiumSales">
+      <div class="podium-head">
+        <div>
+          <h3>Maior valor em vendas</h3>
+          <div class="ksub">vendas de vitaminas por cupom (exceto Alvaro)</div>
+        </div>
+        <div class="pico">&#128176;</div>
+      </div>
+      <div class="podium-3" id="podiumSalesTop"></div>
+      <div class="podium-rest" id="podiumSalesRest"></div>
+    </div>
+  </div>
+
+  <!-- ===== EVOLUCAO TEMPORAL ===== -->
+  <div class="section-head">
+    <div>
+      <div class="label">Evolução temporal</div>
+      <h2>Volume e <em>views</em> por dia</h2>
+    </div>
+  </div>
+  <div class="card">
+    <div class="tabs" id="timelineTabs">
+      <button class="tab active" data-tl="daily">Por dia</button>
+      <button class="tab" data-tl="cumulative">Acumulado</button>
+    </div>
+    <div class="chart-box tall"><canvas id="timelineChart"></canvas></div>
+  </div>
+
+  <!-- ===== FORMATO ===== -->
+  <div class="row-2" style="margin-top: 16px;">
+    <div class="card">
+      <h3>Distribuição por formato</h3>
+      <div class="sub" id="formatChartSub"></div>
+      <div class="chart-box donut-box"><canvas id="formatChart"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Performance por formato</h3>
+      <div class="sub">média de views por tipo de conteúdo</div>
+      <div class="chart-box donut-box"><canvas id="formatPerfChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ===== RANKING ===== -->
+  <div class="section-head">
+    <div>
+      <div class="label">Ranking de creators</div>
+      <h2>Quem está <em>brilhando</em> mais</h2>
+    </div>
+    <div class="hint">ordenação dinâmica</div>
+  </div>
+  <div class="card">
+    <div class="tabs" id="rankTabs">
+      <button class="tab active" data-rk="views">Views</button>
+      <button class="tab" data-rk="posts">Posts</button>
+      <button class="tab" data-rk="engagement">Engajamento</button>
+      <button class="tab" data-rk="avg_views">Média/post</button>
+    </div>
+    <div class="ranking" id="rankingList"></div>
+  </div>
+
+  <!-- ===== STATUS POR CREATOR ===== -->
+  <div class="section-head">
+    <div>
+      <div class="label" id="statusSectionLabel">Status por creator · semana 1</div>
+      <h2>Semáforo de <em>entrega</em></h2>
+    </div>
+    <div class="hint">clique no filtro pra segmentar</div>
+  </div>
+  <div class="card">
+    <div class="filter-pills" id="statusFilters"></div>
+    <div class="creators-grid" id="creatorsGrid"></div>
+  </div>
+
+  <!-- ===== POSTS TABLE ===== -->
+  <div class="section-head">
+    <div>
+      <div class="label">Detalhe por post</div>
+      <h2 id="postsSectionTitle">Conteúdos <em>capturados</em></h2>
+    </div>
+    <div class="hint">busque, filtre, ordene</div>
+  </div>
+  <div class="card">
+    <div class="posts-toolbar">
+      <input type="text" id="searchInput" placeholder="&#128269; Buscar por @ ou URL..." />
+      <select id="formatFilter"><option value="">Todos os formatos</option></select>
+      <select id="platformFilter"><option value="">Todas plataformas</option></select>
+      <select id="sortBy">
+        <option value="date_desc">Mais recentes primeiro</option>
+        <option value="date_asc">Mais antigos primeiro</option>
+        <option value="views_desc">Mais views</option>
+        <option value="engagement_desc">Mais engajamento</option>
+      </select>
+      <div class="posts-count" id="postsCount"></div>
+    </div>
+    <div class="posts-table-wrap">
+      <table class="posts-table">
+        <thead>
+          <tr>
+            <th>Creator</th><th>Formato</th><th>Plataforma</th><th>Data</th>
+            <th class="num">Views</th><th class="num">Likes</th><th class="num">Coment.</th><th class="num">Shares</th><th>Link</th>
+          </tr>
+        </thead>
+        <tbody id="postsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div>NUTREN VITAMINAS · UGC</div>
+    <div class="right">
+      <span class="dot-orange">&#9679;</span>
+      <span id="footerInfo">SEMANA 1 DE 4 · ATUALIZADO 21.JUN.2026</span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+const DATA = {"campaign": "Nutren Vitaminas", "telas_validas": 123, "bonus_telas": 75, "bonus_creators": 18, "sales": [{"handle": "@barbaraeffting", "coupon": "BARBARAMULTI", "value": 119.5, "orders": 1}, {"handle": "@yasmathiola", "coupon": "YASMULTI", "value": 79.67, "orders": 1}, {"handle": "@rebecabarbosar_", "coupon": "REBECAMULTI", "value": 66.4, "orders": 1}], "sales_total": 265.57, "sales_count": 3, "ticket_medio": 88.52, "creators_ativos": 50, "semanas_totais": 4, "semana_atual": 1, "data_fechamento": "2026-06-21", "escopo_semanal_telas": 3, "escopo_total_stories": 600, "expected_s1": 150, "delivered_stories": 123, "delivered_pct_total": 20.5, "expected_pct_total": 25.0, "totals": {"posts": 211, "stories": 198, "reels": 12, "views": 72862, "engagement": 13796, "likes": 690, "comments": 277, "saves": 45, "shares": 12829}, "week_detail": {"semana_num": 1, "data_fechamento": "2026-06-21", "expected_stories": 150, "delivered_stories": 198, "adherence_pct": 82.0, "em_dia_creators": 36, "creators_ativos": 50}, "creators": [{"handle": "@anuskalais", "name": "anuskalais", "status": "parcial", "posts": 2, "stories": 2, "reels": 0, "feeds": 0, "videos": 0, "views": 0, "engagement": 0, "aprovado": 1, "pendente": 0}, {"handle": "@araujohercules", "name": "araujohercules", "status": "parcial", "posts": 2, "stories": 2, "reels": 0, "feeds": 0, "videos": 0, "views": 0, "engagement": 0, "aprovado": 0, "pendente": 1}, {"handle": "@aynirarafaela", "name": "aynirarafaela", "status": "em_dia", "posts": 4, "stories": 3, "reels": 1, "feeds": 0, "videos": 0, "views": 0, "engagement": 0, "aprovado": 0, "pendente": 0}, {"handle": "@b_galvao", "name": "b_galvao", "status": "atencao", "posts": 0, "stories": 0, "reels": 0, "feeds": 0, "videos": 0, "views": 0, "engagement": 0, "aprovado": 0, "pendente": 3}, {"handle": "@barbaraeffting", "name": "Barbara Effting", "status": "em_dia", "posts": 9, "stories": 9, "reels": 0, "feeds": 0, "videos": 0, "views": 951, "engagement": 0, "aprovado": 0, "pendente": 1}, {"handle": "@belezadadeza", "name": "Andreza Barros", "status": "em_dia", "posts": 4, "stories": 4, "reels": 0, "feeds": 0, "videos": 0, "views": 278, "engagement": 8072, "aprovado": 0, "pendente": 0}, {"handle": "@binaa_almeida1", "name": "binaa_almeida1", "status": "parcial", "posts": 2, "stories": 2, "reels": 0, "feeds": 0, "videos": 0, "views": 0, "engagement": 0, "aprovado": 1, "pendente": 0}, {"handle": "@brendaavi_", "name": "brenda vitória", "status": "em_dia", "posts": 3, "stories": 3, "reels": 1, "feeds": 0, "videos": 0, "views": 2930, "engagement": 21, "aprovado": 0, "pendente": 1}, {"handle": "@bygeovanafranco", "name": "GEOVANA FRANCO", "status": "em_dia", "posts": 4, "stories": 3, "reels": 1, "feeds": 0, "videos": 0, "views": 1850, "engagement": 148, "aprovado": 0, "pendente": 0}, {"handle": "@bysamirasilva", "name": "bysamirasilva", "status": "parcial", "posts": 2, "stories": 2, "reels": 0, "feeds": 0, "videos": 0, "views": 0, "engagement": 0, "aprovado": 0, "pendente": 1}, {"handle": "@camillyvaz_", "name": "Camilly Vaz", "status": "em_dia", "posts": 4, "stories": 4, "reels": 0, "feeds": 0, "videos": 0, "views": 1195, "engagement": 0, "aprovado": 0, "pendente": 1}, {"handle": "@casa.em.ordem.cafe", "name": "Vanessa • Casa em Ordem", "status": "em_dia", "posts": 10, "stories": 10, "reels": 0, "feeds": 0, "videos": 0, "views": 1275, "engagement": 4, "aprovado": 0, "pendente": 0}, {"handle": "@cibele_taylor", "name": "cibele_taylor", "status": "parcial", "posts": 2, "stories": 2, "reels": 0, "feeds": 0, "videos": 0, "views": 0, "engagement": 0, "aprovado": 0, "pendente": 1}, {"handle": "@danielesousa_sz", "name": "Danny Mendes", "status": "em_dia", "posts": 4, "stories": 3, "reels": 1, "feeds": 0, "videos": 0, "views": 737, "engagement": 4839, "aprovado": 0, "pendente": 0}, {"handle": "@elaynne_diniz", "name": "elaynne_diniz", "status": "atencao", "posts": 0, "stories": 0, "reels": 0, "feeds": 0, "videos": 0, "views": 0, "engagement": 0, "aprovado": 0, "pendente": 3}, {"handle": "@elisacortereal", "name": "Elisa Côrte Real", "status": "em_dia", "posts": 4, "stories": 4, "reels": 0, "feeds": 0, "videos": 0, "views": 839, "engagement": 1, "aprovado": 0, "pendente": 0}, {"handle": "@esthefane_vm", "name": "esthefane_vm", "status": "em_dia", "posts": 3, "stories": 3, "reels": 0, "feeds": 0, "videos": 0, "views": 0, "engagement": 0, "aprovado": 0, "pendente": 0}, {"handle": "@eueflavio", "name": "Flávio Menezes", "status": "em_dia", "posts": 4, "stories": 4, "reels": 0, "feeds": 0, "videos": 0, "views": 714, "engagement": 0, "aprovado": 0, "pendente": 0}, {"handle": "@eupriscilaaraujo", "name": "Priscila Araújo", "status": "em_dia", "posts": 7, "stories": 7, "reels": 0, "feeds": 0, "videos": 0, "views": 1752, "engagement": 0, "aprovado": 0, "pendente": 0}, {"handle": "@fernandes_dduda", "name": "fernandes_dduda", "status": "atencao", "posts": 0, "stories": 0, "reels": 0, "feeds": 0, "videos": 0, "views": 0, "engagement": 0, "aprovado": 0, "pendente": 4}, {"handle": "@gennygregorio", "name": "Geny Gregorio", "status": "em_dia", "posts": 4, "stories": 3, "reels": 1, "feeds": 0, "videos": 0, "views": 1822, "engagement": 298, "aprovado": 0, "pendente": 1}, {"handle": "@giovana_botignon", "name": "Giovana Botignon", "status": "em_dia", "posts": 3, "stories": 3, "reels": 0, "feeds": 0, "videos": 0, "views": 433, "engagement": 0, "aprovado": 0, "pendente": 0}, {"handle": "@isa.rcnunes", "name": "Isabela Nunes", "status": "em_dia", "posts": 19, "stories": 18, "reels": 1, "feeds": 0, "videos": 0, "views": 7557, "engagement": 134, "aprovado": 0, "pendente": 0}, {"handle": "@isabellecruzof", "name": "isabellecruzof", "status": "parcial", "posts": 1, "stories": 1, "reels": 0, "feeds": 0, "videos": 0, "views": 0, "engagement": 0, "aprovado": 2, "pendente": 0}, {"handle": "@isaluu_", "name": "Isalu Sant Modelo & Criadora de Conteúdo", "status": "em_dia", "posts": 3, "stories": 3, "reels": 0, "feeds": 0, "videos": 0, "views": 334, "engagement": 0, "aprovado": 3, "pendente": 0}, {"handle": "@kaylanecrd", "name": "Kaylane", "status": "em_dia", "posts": 5, "stories": 4, "reels": 0, "feeds": 1, "videos": 0, "views": 1535, "engagement": 53, "aprovado": 0, "pendente": 0}, {"handle": "@laripagan", "name": "Lari Pagan", "status": "em_dia", "posts": 4, "stories": 4, "reels": 0, "feeds": 0, "videos": 0, "views": 1182, "engagement": 1, "aprovado": 0, "pendente": 0}, {"handle": "@larissagoettems", "name": "larissagoettems", "status": "atencao", "posts": 0, "stories": 0, "reels": 0, "feeds": 0, "videos": 0, "views": 0, "engagement": 0, "aprovado": 0, "pendente": 3}, {"handle": "@leticiamendonca.o", "name": "leticiamendonca.o", "status": "parcial", "posts": 2, "stories": 2, "reels": 0, "feeds": 0, "videos": 0, "views": 0, "engagement": 0, "aprovado": 0, "pendente": 1}, {"handle": "@lorranycorecha_oficial", "name": "lorranycorecha_oficial", "status": "atencao", "posts": 0, "stories": 0, "reels": 0, "feeds": 0, "videos": 0, "views": 0, "engagement": 0, "aprovado": 0, "pendente": 3}, {"handle": "@luanasteinn", "name": "Luana Stein", "status": "em_dia", "posts": 4, "stories": 3, "reels": 1, "feeds": 0, "videos": 0, "views": 3659, "engagement": 50, "aprovado": 1, "pendente": 0}, {"handle": "@marcellej.dias", "name": "Marcelle Dias", "status": "em_dia", "posts": 3, "stories": 3, "reels": 0, "feeds": 0, "videos": 0, "views": 815, "engagement": 0, "aprovado": 0, "pendente": 0}, {"handle": "@maria.natalia3", "name": "Maria Natalia", "status": "em_dia", "posts": 12, "stories": 12, "reels": 0, "feeds": 0, "videos": 0, "views": 13022, "engagement": 0, "aprovado": 2, "pendente": 2}, {"handle": "@mariavitoria_vincler", "name": "Maria Vitória Vincler", "status": "em_dia", "posts": 17, "stories": 16, "reels": 1, "feeds": 0, "videos": 0, "views": 5654, "engagement": 73, "aprovado": 2, "pendente": 0}, {"handle": "@muniz.jeni", "name": "jenifer muniz", "status": "em_dia", "posts": 5, "stories": 4, "reels": 1, "feeds": 0, "videos": 0, "views": 2233, "engagement": 55, "aprovado": 0, "pendente": 0}, {"handle": "@namoralcarol", "name": "Caroline Mendes", "status": "em_dia", "posts": 4, "stories": 4, "reels": 0, "feeds": 0, "videos": 0, "views": 1111, "engagement": 0, "aprovado": 0, "pendente": 0}, {"handle": "@nathalyasd", "name": "Nathalya Dantas", "status": "em_dia", "posts": 4, "stories": 3, "reels": 1, "feeds": 0, "videos": 0, "views": 1484, "engagement": 0, "aprovado": 0, "pendente": 0}, {"handle": "@nathyperfil", "name": "NATHALYA ANDRADE", "status": "em_dia", "posts": 3, "stories": 3, "reels": 0, "feeds": 0, "videos": 0, "views": 46, "engagement": 0, "aprovado": 0, "pendente": 0}, {"handle": "@raquel.cfarias01", "name": "Raquel Farias", "status": "em_dia", "posts": 3, "stories": 3, "reels": 0, "feeds": 0, "videos": 0, "views": 301, "engagement": 0, "aprovado": 0, "pendente": 0}, {"handle": "@rebecabarbosar_", "name": "Rebeca Barbosa 🦋🧿✨", "status": "em_dia", "posts": 8, "stories": 8, "reels": 0, "feeds": 0, "videos": 0, "views": 8423, "engagement": 5, "aprovado": 0, "pendente": 0}, {"handle": "@rubynhaasantos", "name": "Rubynha", "status": "em_dia", "posts": 5, "stories": 5, "reels": 0, "feeds": 0, "videos": 0, "views": 883, "engagement": 0, "aprovado": 0, "pendente": 0}, {"handle": "@soouelizmota_", "name": "Eliz Mota", "status": "em_dia", "posts": 3, "stories": 3, "reels": 0, "feeds": 0, "videos": 0, "views": 367, "engagement": 0, "aprovado": 0, "pendente": 1}, {"handle": "@souamandadutra", "name": "AMANDA DUTRA", "status": "parcial", "posts": 2, "stories": 2, "reels": 0, "feeds": 0, "videos": 0, "views": 1688, "engagement": 0, "aprovado": 1, "pendente": 2}, {"handle": "@stacylyy", "name": "Stacyly", "status": "em_dia", "posts": 3, "stories": 3, "reels": 0, "feeds": 0, "videos": 0, "views": 1102, "engagement": 0, "aprovado": 0, "pendente": 0}, {"handle": "@taissevero", "name": "Taís Severo", "status": "em_dia", "posts": 6, "stories": 3, "reels": 2, "feeds": 0, "videos": 1, "views": 2287, "engagement": 39, "aprovado": 0, "pendente": 1}, {"handle": "@taliguimaraes_", "name": "Talita Guimarães", "status": "em_dia", "posts": 3, "stories": 3, "reels": 0, "feeds": 0, "videos": 0, "views": 322, "engagement": 0, "aprovado": 0, "pendente": 0}, {"handle": "@thiagokimm", "name": "thiagokimm", "status": "atencao", "posts": 0, "stories": 0, "reels": 0, "feeds": 0, "videos": 0, "views": 0, "engagement": 0, "aprovado": 0, "pendente": 4}, {"handle": "@vincent.unico", "name": "Vincent Unico", "status": "em_dia", "posts": 3, "stories": 3, "reels": 0, "feeds": 0, "videos": 0, "views": 321, "engagement": 0, "aprovado": 1, "pendente": 0}, {"handle": "@w.nirka", "name": "Nirka", "status": "em_dia", "posts": 4, "stories": 4, "reels": 0, "feeds": 0, "videos": 0, "views": 719, "engagement": 0, "aprovado": 0, "pendente": 0}, {"handle": "@yasmathiola", "name": "Yasmim Mathiola", "status": "em_dia", "posts": 8, "stories": 8, "reels": 0, "feeds": 0, "videos": 0, "views": 3041, "engagement": 3, "aprovado": 0, "pendente": 0}], "posts": [{"handle": "@brendaavi_", "date": "2026-06-19", "platform": "Instagram", "format": "Reel", "views": 2930, "engagement": 21, "likes": 0, "comments": 21, "saves": 0, "shares": 0, "url": "https://www.instagram.com/reel/DZyOiG_RSVr/"}, {"handle": "@rebecabarbosar_", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 1800, "engagement": 2, "likes": 0, "comments": 0, "saves": 0, "shares": 2, "url": "https://www.instagram.com/stories/rebecabarbosar_/3920101956173825132"}, {"handle": "@rebecabarbosar_", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 1793, "engagement": 1, "likes": 0, "comments": 0, "saves": 0, "shares": 1, "url": "https://www.instagram.com/stories/rebecabarbosar_/3920067153399524001"}, {"handle": "@maria.natalia3", "date": "2026-06-05", "platform": "Instagram", "format": "Story", "views": 1757, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/maria.natalia3/3913144653644568605"}, {"handle": "@isa.rcnunes", "date": "2026-06-21", "platform": "Instagram", "format": "Reel", "views": 1755, "engagement": 132, "likes": 102, "comments": 30, "saves": 7, "shares": 0, "url": "https://www.instagram.com/reel/DZ2-nCiBD9l/"}, {"handle": "@luanasteinn", "date": "2026-06-20", "platform": "Instagram", "format": "Reel", "views": 1742, "engagement": 49, "likes": 40, "comments": 9, "saves": 1, "shares": 0, "url": "https://www.instagram.com/reel/DZz-6GthWub/"}, {"handle": "@maria.natalia3", "date": "2026-06-20", "platform": "Instagram", "format": "Story", "views": 1649, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/maria.natalia3/3923750528546670628"}, {"handle": "@rebecabarbosar_", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 1593, "engagement": 1, "likes": 0, "comments": 0, "saves": 0, "shares": 1, "url": "https://www.instagram.com/stories/rebecabarbosar_/3920069138790104758"}, {"handle": "@rebecabarbosar_", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 1523, "engagement": 1, "likes": 0, "comments": 0, "saves": 0, "shares": 1, "url": "https://www.instagram.com/stories/rebecabarbosar_/3920079319481639889"}, {"handle": "@maria.natalia3", "date": "2026-05-26", "platform": "Instagram", "format": "Story", "views": 1296, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/maria.natalia3/3905854135870858240"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-20", "platform": "Instagram", "format": "Reel", "views": 1184, "engagement": 72, "likes": 40, "comments": 32, "saves": 1, "shares": 0, "url": "https://www.instagram.com/reel/DZ0LivmOHHi/"}, {"handle": "@maria.natalia3", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 1182, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/maria.natalia3/3922334744981230988"}, {"handle": "@maria.natalia3", "date": "2026-06-01", "platform": "Instagram", "format": "Story", "views": 1111, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/maria.natalia3/3910024578956922842"}, {"handle": "@souamandadutra", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 1096, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/souamandadutra/3923285054015744105"}, {"handle": "@gennygregorio", "date": "2026-06-18", "platform": "Instagram", "format": "Reel", "views": 1075, "engagement": 298, "likes": 227, "comments": 71, "saves": 2, "shares": 0, "url": "https://www.instagram.com/reel/DZvQfvsRUmT/"}, {"handle": "@bygeovanafranco", "date": "2026-06-18", "platform": "Instagram", "format": "Reel", "views": 1026, "engagement": 148, "likes": 95, "comments": 49, "saves": 0, "shares": 4, "url": "https://www.instagram.com/reel/DZuvYwxxsQt/"}, {"handle": "@luanasteinn", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 995, "engagement": 1, "likes": 0, "comments": 0, "saves": 0, "shares": 1, "url": "https://www.instagram.com/stories/luanasteinn/3922933264976756650"}, {"handle": "@maria.natalia3", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 993, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/maria.natalia3/3923052097067619259"}, {"handle": "@muniz.jeni", "date": "2026-06-19", "platform": "Instagram", "format": "Reel", "views": 962, "engagement": 55, "likes": 48, "comments": 7, "saves": 1, "shares": 0, "url": "https://www.instagram.com/reel/DZxzreBBMu4/"}, {"handle": "@maria.natalia3", "date": "2026-06-02", "platform": "Instagram", "format": "Story", "views": 955, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/maria.natalia3/3910970151436853706"}, {"handle": "@taissevero", "date": "2026-06-16", "platform": "Instagram", "format": "Reel", "views": 926, "engagement": 33, "likes": 28, "comments": 4, "saves": 4, "shares": 1, "url": "https://www.instagram.com/reel/DZp6kIQxKTr/"}, {"handle": "@laripagan", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 886, "engagement": 1, "likes": 0, "comments": 0, "saves": 0, "shares": 1, "url": "https://www.instagram.com/stories/laripagan/3922930596916726544"}, {"handle": "@maria.natalia3", "date": "2026-06-02", "platform": "Instagram", "format": "Story", "views": 886, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/maria.natalia3/3910971334943574846"}, {"handle": "@kaylanecrd", "date": "2026-06-08", "platform": "Instagram", "format": "Feed", "views": 884, "engagement": 53, "likes": 42, "comments": 10, "saves": 2, "shares": 1, "url": "https://www.instagram.com/p/DZWTA4Skbq-/"}, {"handle": "@maria.natalia3", "date": "2026-06-09", "platform": "Instagram", "format": "Story", "views": 875, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/maria.natalia3/3915651372247257223"}, {"handle": "@maria.natalia3", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 845, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/maria.natalia3/3920318655502674250"}, {"handle": "@maria.natalia3", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 844, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/maria.natalia3/3923182637812266051"}, {"handle": "@yasmathiola", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 702, "engagement": 1, "likes": 0, "comments": 0, "saves": 0, "shares": 1, "url": "https://www.instagram.com/stories/yasmathiola/3920297648615706169"}, {"handle": "@yasmathiola", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 658, "engagement": 1, "likes": 0, "comments": 0, "saves": 0, "shares": 1, "url": "https://www.instagram.com/stories/yasmathiola/3920299078556447142"}, {"handle": "@yasmathiola", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 649, "engagement": 1, "likes": 0, "comments": 0, "saves": 0, "shares": 1, "url": "https://www.instagram.com/stories/yasmathiola/3920298801168457336"}, {"handle": "@maria.natalia3", "date": "2026-06-10", "platform": "Instagram", "format": "Story", "views": 629, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/maria.natalia3/3916726129969031368"}, {"handle": "@danielesousa_sz", "date": "2026-06-19", "platform": "Instagram", "format": "Reel", "views": 601, "engagement": 3697, "likes": 62, "comments": 44, "saves": 26, "shares": 3591, "url": "https://www.instagram.com/reel/DZxX0MZRnVg/"}, {"handle": "@souamandadutra", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 592, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/souamandadutra/3921844188862445612"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-14", "platform": "Instagram", "format": "Story", "views": 563, "engagement": 1, "likes": 0, "comments": 0, "saves": 0, "shares": 1, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3919722649386063482"}, {"handle": "@nathalyasd", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 537, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/nathalyasd/3920014268594677541"}, {"handle": "@nathalyasd", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 533, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/nathalyasd/3920013324213567045"}, {"handle": "@luanasteinn", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 498, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/luanasteinn/3920049266899251315"}, {"handle": "@isa.rcnunes", "date": "2026-06-11", "platform": "Instagram", "format": "Story", "views": 485, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3917405708743199360"}, {"handle": "@taissevero", "date": "2026-06-21", "platform": "Instagram", "format": "Story", "views": 471, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/taissevero/3924417249721549251"}, {"handle": "@rebecabarbosar_", "date": "2026-06-20", "platform": "Instagram", "format": "Story", "views": 469, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/rebecabarbosar_/3923401021510147594"}, {"handle": "@stacylyy", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 452, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/stacylyy/3923046738022059801"}, {"handle": "@eupriscilaaraujo", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 443, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/eupriscilaaraujo/3920150441819985465"}, {"handle": "@rebecabarbosar_", "date": "2026-06-16", "platform": "Instagram", "format": "Story", "views": 430, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/rebecabarbosar_/3921153956252095409"}, {"handle": "@rebecabarbosar_", "date": "2026-06-02", "platform": "Instagram", "format": "Story", "views": 430, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/rebecabarbosar_/3911010857249110801"}, {"handle": "@muniz.jeni", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 427, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/muniz.jeni/3923113403287184415"}, {"handle": "@luanasteinn", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 424, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/luanasteinn/3921496079330150093"}, {"handle": "@isa.rcnunes", "date": "2026-06-21", "platform": "Instagram", "format": "Story", "views": 418, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3924463809745828671"}, {"handle": "@nathalyasd", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 414, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/nathalyasd/3921637712453195700"}, {"handle": "@isa.rcnunes", "date": "2026-06-21", "platform": "Instagram", "format": "Story", "views": 395, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3924580465214865917"}, {"handle": "@taissevero", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 387, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/taissevero/3921448457949261280"}, {"handle": "@rebecabarbosar_", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 385, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/rebecabarbosar_/3920406577559124293"}, {"handle": "@namoralcarol", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 367, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/namoralcarol/3920131346291086928"}, {"handle": "@isa.rcnunes", "date": "2026-06-02", "platform": "Instagram", "format": "Story", "views": 360, "engagement": 2, "likes": 0, "comments": 0, "saves": 0, "shares": 2, "url": "https://www.instagram.com/stories/isa.rcnunes/3910918195201013520"}, {"handle": "@isa.rcnunes", "date": "2026-06-05", "platform": "Instagram", "format": "Story", "views": 358, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3913075482942172678"}, {"handle": "@isa.rcnunes", "date": "2026-06-12", "platform": "Instagram", "format": "Story", "views": 349, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3918081248370308704"}, {"handle": "@stacylyy", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 347, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/stacylyy/3920028893487035534"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 343, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3920312979437559831"}, {"handle": "@eupriscilaaraujo", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 336, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/eupriscilaaraujo/3920197074340118005"}, {"handle": "@isa.rcnunes", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 335, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3920179160325120563"}, {"handle": "@isa.rcnunes", "date": "2026-06-02", "platform": "Instagram", "format": "Story", "views": 331, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3910919444578485032"}, {"handle": "@isa.rcnunes", "date": "2026-06-08", "platform": "Instagram", "format": "Story", "views": 327, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3915206710147348063"}, {"handle": "@camillyvaz_", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 320, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/camillyvaz_/3922283871282990230"}, {"handle": "@camillyvaz_", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 320, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/camillyvaz_/3922282091992151216"}, {"handle": "@isa.rcnunes", "date": "2026-06-16", "platform": "Instagram", "format": "Story", "views": 316, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3920986390116854678"}, {"handle": "@isa.rcnunes", "date": "2026-06-03", "platform": "Instagram", "format": "Story", "views": 316, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3911559720691704101"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-03", "platform": "Instagram", "format": "Story", "views": 311, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3911600280064393031"}, {"handle": "@bygeovanafranco", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 310, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/bygeovanafranco/3920148639121517883"}, {"handle": "@isa.rcnunes", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 306, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3920451198344309463"}, {"handle": "@stacylyy", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 303, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/stacylyy/3922224784713127781"}, {"handle": "@muniz.jeni", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 290, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/muniz.jeni/3920056628124503915"}, {"handle": "@muniz.jeni", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 289, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/muniz.jeni/3920034055551282886"}, {"handle": "@isa.rcnunes", "date": "2026-06-06", "platform": "Instagram", "format": "Story", "views": 288, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3913571613651920759"}, {"handle": "@marcellej.dias", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 286, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/marcellej.dias/3922370031699031990"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 285, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3923299574989834381"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-03", "platform": "Instagram", "format": "Story", "views": 285, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3911600750338146722"}, {"handle": "@namoralcarol", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 279, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/namoralcarol/3921582414978543769"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-05", "platform": "Instagram", "format": "Story", "views": 279, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3913098556532821547"}, {"handle": "@camillyvaz_", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 278, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/camillyvaz_/3920101235382883906"}, {"handle": "@camillyvaz_", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 277, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/camillyvaz_/3923047816327406240"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-16", "platform": "Instagram", "format": "Story", "views": 277, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3921090392590541813"}, {"handle": "@gennygregorio", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 274, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/gennygregorio/3922422064996482229"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-13", "platform": "Instagram", "format": "Story", "views": 274, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3918777095690289131"}, {"handle": "@isa.rcnunes", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 272, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3922466394935817627"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-03", "platform": "Instagram", "format": "Story", "views": 267, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3911602987347790058"}, {"handle": "@marcellej.dias", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 266, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/marcellej.dias/3922371786209949026"}, {"handle": "@muniz.jeni", "date": "2026-06-16", "platform": "Instagram", "format": "Story", "views": 265, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/muniz.jeni/3920958071584893230"}, {"handle": "@marcellej.dias", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 263, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/marcellej.dias/3922370804851829207"}, {"handle": "@bygeovanafranco", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 262, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/bygeovanafranco/3922956736831520194"}, {"handle": "@isa.rcnunes", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 262, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3922469883634949419"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-13", "platform": "Instagram", "format": "Story", "views": 260, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3918777939240319436"}, {"handle": "@rubynhaasantos", "date": "2026-06-16", "platform": "Instagram", "format": "Story", "views": 259, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/rubynhaasantos/3920955778485676747"}, {"handle": "@bygeovanafranco", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 252, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/bygeovanafranco/3921700932384035220"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-16", "platform": "Instagram", "format": "Story", "views": 252, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3921091985721415814"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-03", "platform": "Instagram", "format": "Story", "views": 249, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3911602423278264739"}, {"handle": "@taissevero", "date": "2026-06-17", "platform": "TikTok", "format": "Video", "views": 248, "engagement": 4, "likes": 4, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.tiktok.com/@taissevero13/video/7652325159554059541"}, {"handle": "@gennygregorio", "date": "2026-06-16", "platform": "Instagram", "format": "Story", "views": 244, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/gennygregorio/3920731383852915203"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 242, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3921725398709956635"}, {"handle": "@yasmathiola", "date": "2026-06-03", "platform": "Instagram", "format": "Story", "views": 240, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/yasmathiola/3911439184481286502"}, {"handle": "@namoralcarol", "date": "2026-06-16", "platform": "Instagram", "format": "Story", "views": 238, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/namoralcarol/3920861787764177808"}, {"handle": "@elisacortereal", "date": "2026-06-16", "platform": "Instagram", "format": "Story", "views": 237, "engagement": 1, "likes": 0, "comments": 0, "saves": 0, "shares": 1, "url": "https://www.instagram.com/stories/elisacortereal/3920864941410427633"}, {"handle": "@eupriscilaaraujo", "date": "2026-06-21", "platform": "Instagram", "format": "Story", "views": 234, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/eupriscilaaraujo/3924628438861237363"}, {"handle": "@w.nirka", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 233, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/w.nirka/3920318576861764938"}, {"handle": "@w.nirka", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 232, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/w.nirka/3920319136765176570"}, {"handle": "@isa.rcnunes", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 231, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3923126671989018611"}, {"handle": "@isa.rcnunes", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 230, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3921617632525096149"}, {"handle": "@gennygregorio", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 229, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/gennygregorio/3923179871719120944"}, {"handle": "@eupriscilaaraujo", "date": "2026-06-16", "platform": "Instagram", "format": "Story", "views": 229, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/eupriscilaaraujo/3920773527036535847"}, {"handle": "@namoralcarol", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 227, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/namoralcarol/3923034128258031685"}, {"handle": "@elisacortereal", "date": "2026-06-16", "platform": "Instagram", "format": "Story", "views": 225, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/elisacortereal/3920871838476233248"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 224, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3923188246943507124"}, {"handle": "@isa.rcnunes", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 223, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isa.rcnunes/3923128961891138520"}, {"handle": "@w.nirka", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 212, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/w.nirka/3920330845055684804"}, {"handle": "@casa.em.ordem.cafe", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 212, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/casa.em.ordem.cafe/3920205913382802598"}, {"handle": "@eueflavio", "date": "2026-06-21", "platform": "Instagram", "format": "Story", "views": 209, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/eueflavio/3924439234941586641"}, {"handle": "@yasmathiola", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 208, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/yasmathiola/3923102463997638789"}, {"handle": "@elisacortereal", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 208, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/elisacortereal/3922992775868296541"}, {"handle": "@casa.em.ordem.cafe", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 206, "engagement": 1, "likes": 0, "comments": 0, "saves": 0, "shares": 1, "url": "https://www.instagram.com/stories/casa.em.ordem.cafe/3920209511382587728"}, {"handle": "@eueflavio", "date": "2026-06-21", "platform": "Instagram", "format": "Story", "views": 202, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/eueflavio/3924428535436085264"}, {"handle": "@yasmathiola", "date": "2026-06-20", "platform": "Instagram", "format": "Story", "views": 202, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/yasmathiola/3923782458598919221"}, {"handle": "@casa.em.ordem.cafe", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 199, "engagement": 1, "likes": 0, "comments": 0, "saves": 0, "shares": 1, "url": "https://www.instagram.com/stories/casa.em.ordem.cafe/3920205049641371105"}, {"handle": "@yasmathiola", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 197, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/yasmathiola/3921621355651475472"}, {"handle": "@raquel.cfarias01", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 195, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/raquel.cfarias01/3920046049557661032"}, {"handle": "@taissevero", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 190, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/taissevero/3922955201246517451"}, {"handle": "@giovana_botignon", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 186, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/giovana_botignon/3920152452968397061"}, {"handle": "@yasmathiola", "date": "2026-06-16", "platform": "Instagram", "format": "Story", "views": 185, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/yasmathiola/3920885110084323149"}, {"handle": "@eupriscilaaraujo", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 183, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/eupriscilaaraujo/3922220543084118059"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 181, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3922520465369642729"}, {"handle": "@kaylanecrd", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 178, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/kaylanecrd/3923005798905652130"}, {"handle": "@mariavitoria_vincler", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 178, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/mariavitoria_vincler/3922517397781523970"}, {"handle": "@eupriscilaaraujo", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 176, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/eupriscilaaraujo/3921633049318636351"}, {"handle": "@elisacortereal", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 169, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/elisacortereal/3922459891013117648"}, {"handle": "@rubynhaasantos", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 168, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/rubynhaasantos/3920231948023187295"}, {"handle": "@kaylanecrd", "date": "2026-06-08", "platform": "Instagram", "format": "Story", "views": 164, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/kaylanecrd/3915194860927984520"}, {"handle": "@casa.em.ordem.cafe", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 162, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/casa.em.ordem.cafe/3921568128346171991"}, {"handle": "@giovana_botignon", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 160, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/giovana_botignon/3923047870937051236"}, {"handle": "@kaylanecrd", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 160, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/kaylanecrd/3923006514688794946"}, {"handle": "@casa.em.ordem.cafe", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 157, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/casa.em.ordem.cafe/3921565153276035624"}, {"handle": "@rubynhaasantos", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 157, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/rubynhaasantos/3920236111767489205"}, {"handle": "@eueflavio", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 156, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/eueflavio/3921545733036272270"}, {"handle": "@rubynhaasantos", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 153, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/rubynhaasantos/3920232311887479596"}, {"handle": "@eupriscilaaraujo", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 151, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/eupriscilaaraujo/3923111646025857330"}, {"handle": "@kaylanecrd", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 149, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/kaylanecrd/3923007289569681005"}, {"handle": "@eueflavio", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 147, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/eueflavio/3921546474505335540"}, {"handle": "@rubynhaasantos", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 146, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/rubynhaasantos/3920233328200891914"}, {"handle": "@soouelizmota_", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 145, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/soouelizmota_/3921766454709516580"}, {"handle": "@danielesousa_sz", "date": "2026-06-16", "platform": "Instagram", "format": "Story", "views": 136, "engagement": 1142, "likes": 0, "comments": 0, "saves": 0, "shares": 1142, "url": "https://www.instagram.com/stories/danielesousa_sz/3920776303318517790"}, {"handle": "@laripagan", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 132, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/laripagan/3920079334144009240"}, {"handle": "@barbaraeffting", "date": "2026-06-20", "platform": "Instagram", "format": "Story", "views": 123, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/barbaraeffting/3923720955478545958"}, {"handle": "@vincent.unico", "date": "2026-06-20", "platform": "Instagram", "format": "Story", "views": 122, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/vincent.unico/3923746825374372892"}, {"handle": "@vincent.unico", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 121, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/vincent.unico/3923078204276901524"}, {"handle": "@barbaraeffting", "date": "2026-06-20", "platform": "Instagram", "format": "Story", "views": 120, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/barbaraeffting/3923723394351774337"}, {"handle": "@soouelizmota_", "date": "2026-06-20", "platform": "Instagram", "format": "Story", "views": 120, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/soouelizmota_/3923663146157485623"}, {"handle": "@casa.em.ordem.cafe", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 120, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/casa.em.ordem.cafe/3922312094984547387"}, {"handle": "@isaluu_", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 119, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isaluu_/3923190879684592080"}, {"handle": "@belezadadeza", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 117, "engagement": 7035, "likes": 0, "comments": 0, "saves": 0, "shares": 7035, "url": "https://www.instagram.com/stories/belezadadeza/3920246015056283347"}, {"handle": "@barbaraeffting", "date": "2026-06-16", "platform": "Instagram", "format": "Story", "views": 114, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/barbaraeffting/3920800060200062641"}, {"handle": "@taliguimaraes_", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 112, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/taliguimaraes_/3920282621297242005"}, {"handle": "@isaluu_", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 111, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isaluu_/3923191558329450073"}, {"handle": "@barbaraeffting", "date": "2026-06-16", "platform": "Instagram", "format": "Story", "views": 110, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/barbaraeffting/3920802359403020930"}, {"handle": "@taliguimaraes_", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 107, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/taliguimaraes_/3920282529366985597"}, {"handle": "@barbaraeffting", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 106, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/barbaraeffting/3921522476979196142"}, {"handle": "@raquel.cfarias01", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 106, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/raquel.cfarias01/3921477703262150698"}, {"handle": "@isaluu_", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 104, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/isaluu_/3923193075291730352"}, {"handle": "@barbaraeffting", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 103, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/barbaraeffting/3921504911329227487"}, {"handle": "@taliguimaraes_", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 103, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/taliguimaraes_/3920282433660360533"}, {"handle": "@soouelizmota_", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 102, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/soouelizmota_/3922302384243499619"}, {"handle": "@barbaraeffting", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 97, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/barbaraeffting/3922226771982735160"}, {"handle": "@barbaraeffting", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 94, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/barbaraeffting/3922223631995453061"}, {"handle": "@giovana_botignon", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 87, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/giovana_botignon/3921590474616227808"}, {"handle": "@laripagan", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 85, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/laripagan/3922216224611314861"}, {"handle": "@barbaraeffting", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 84, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/barbaraeffting/3922960865967019887"}, {"handle": "@casa.em.ordem.cafe", "date": "2026-06-20", "platform": "Instagram", "format": "Story", "views": 80, "engagement": 1, "likes": 0, "comments": 0, "saves": 0, "shares": 1, "url": "https://www.instagram.com/stories/casa.em.ordem.cafe/3923720657560762410"}, {"handle": "@laripagan", "date": "2026-06-17", "platform": "Instagram", "format": "Story", "views": 79, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/laripagan/3921495622766244522"}, {"handle": "@vincent.unico", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 78, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/vincent.unico/3922279262514498058"}, {"handle": "@taissevero", "date": "2026-06-16", "platform": "Instagram", "format": "Reel", "views": 65, "engagement": 2, "likes": 2, "comments": 0, "saves": 1, "shares": 0, "url": "https://www.instagram.com/reel/DZpt-JKxccU/"}, {"handle": "@belezadadeza", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 61, "engagement": 1037, "likes": 0, "comments": 0, "saves": 0, "shares": 1037, "url": "https://www.instagram.com/stories/belezadadeza/3920246262578804152"}, {"handle": "@casa.em.ordem.cafe", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 60, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/casa.em.ordem.cafe/3923207767133875318"}, {"handle": "@casa.em.ordem.cafe", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 56, "engagement": 1, "likes": 0, "comments": 0, "saves": 0, "shares": 1, "url": "https://www.instagram.com/stories/casa.em.ordem.cafe/3923209571741578449"}, {"handle": "@belezadadeza", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 51, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/belezadadeza/3920244195189780097"}, {"handle": "@belezadadeza", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 49, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/belezadadeza/3920244889128591516"}, {"handle": "@nathyperfil", "date": "2026-06-19", "platform": "Instagram", "format": "Story", "views": 46, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/nathyperfil/3922972254850334034"}, {"handle": "@w.nirka", "date": "2026-06-15", "platform": "Instagram", "format": "Story", "views": 42, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/w.nirka/3920320549633235072"}, {"handle": "@casa.em.ordem.cafe", "date": "2026-06-18", "platform": "Instagram", "format": "Story", "views": 23, "engagement": 0, "likes": 0, "comments": 0, "saves": 0, "shares": 0, "url": "https://www.instagram.com/stories/casa.em.ordem.cafe/3922248083798549660"}]};
+
+/* ===== HELPERS ===== */
+const fmt = (n) => {
+  if (n == null || isNaN(n)) return '0';
+  if (Math.abs(n) >= 1e6) return (n/1e6).toFixed(1).replace('.0','') + 'M';
+  if (Math.abs(n) >= 1e3) return (n/1e3).toFixed(1).replace('.0','') + 'K';
+  return Math.round(n).toLocaleString('pt-BR');
+};
+const fmtFull = (n) => (n||0).toLocaleString('pt-BR');
+const vfmt = (v) => v.toFixed(1).replace('.0','').replace('.',',');
+
+/* ===== WEEK NAV ===== */
+function renderWeekNav() {
+  const nav = document.getElementById('weekNav');
+  nav.innerHTML = '';
+  for (let i = 1; i <= DATA.semanas_totais; i++) {
+    const btn = document.createElement('button');
+    const enabled = (i === DATA.semana_atual);
+    btn.className = 'week-btn' + (i === DATA.semana_atual ? ' active' : '');
+    btn.textContent = 'S' + i;
+    btn.disabled = !enabled;
+    btn.title = enabled ? 'Dados da semana ' + i : 'Em breve';
+    nav.appendChild(btn);
+  }
+}
+
+/* ===== KPIs (sem vendas) ===== */
+function renderKPIs() {
+  const t = DATA.totals;
+  const longos = (t.reels||0) + (t.videos||0) + (t.feeds||0);
+  const kpis = [
+    { label: 'Influenciadores', value: DATA.creators_ativos, sub: '<strong>ativos</strong> na campanha', delta: null },
+    { label: 'Posts no consolidado', value: fmt(t.posts), sub: `<strong>${t.stories}</strong> stories · <strong>${longos}</strong> reels/vídeos · <em style="color:var(--orange);">volume total entregue</em>`, delta: '+32% s/ meta' },
+    { label: 'Visualizações', value: fmt(t.views), sub: `média de <strong>${Math.round(t.views/DATA.posts.length)}</strong> por post capturado`, delta: null },
+    { label: 'Engajamento total', value: fmt(t.engagement), sub: `<strong>${fmt((t.likes||0)+(t.comments||0))}</strong> reações + comentários`, delta: null, accent: true },
+    { label: 'Total em vendas', value: brl(DATA.sales_total), sub: `vitaminas via cupom · creators do cronograma`, delta: null },
+    { label: 'Quantidade de vendas', value: DATA.sales_count, sub: `<strong>${DATA.sales.length}</strong> creators com venda registrada`, delta: null },
+    { label: 'Ticket médio', value: brl(DATA.ticket_medio), sub: `valor médio por compra`, delta: null, accent: true },
+  ];
+  document.getElementById('kpiGrid').innerHTML = kpis.map(k => `
+    <div class="kpi ${k.accent ? 'accent' : ''}">
+      ${k.delta ? `<div class="delta">${k.delta}</div>` : ''}
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value">${k.value}</div>
+      <div class="kpi-sub">${k.sub}</div>
+    </div>
+  `).join('');
+}
+
+/* ===== BÔNUS + NOTA (sem expor fontes) ===== */
+function renderCrosscheck() {
+  document.getElementById('bonusLine').innerHTML = `
+    <div class="pill">+${DATA.bonus_telas}</div>
+    <div class="txt">telas <strong>bonificadas</strong>, acima do mínimo de 3 por creator na S1, vindas de <strong>${DATA.bonus_creators} creators</strong>. Entregas extras que <strong>não entram</strong> no cálculo da % do escopo, mas seguem no volume total.</div>
+  `;
+  document.getElementById('noteExpected').textContent = DATA.expected_s1;
+  document.getElementById('noteValidas').textContent = DATA.telas_validas;
+  document.getElementById('noteAdh').textContent = Math.round(DATA.week_detail.adherence_pct) + '%';
+  document.getElementById('noteBonus').textContent = DATA.bonus_telas;
+}
+
+/* ===== HIGHLIGHTS (top volume) ===== */
+function renderHighlights() {
+  const top = [...DATA.creators].sort((a,b)=>(b.posts-a.posts)||(b.views-a.views)).slice(0,6);
+  document.getElementById('highlights').innerHTML = top.map(c => `
+    <div class="highlight">
+      <span class="star">&#9733;</span>
+      <div class="h">${c.handle}</div>
+      <div class="s">${c.posts} posts · ${fmt(c.views)} views</div>
+    </div>
+  `).join('');
+}
+
+/* ===== GAUGE ===== */
+function renderGauge() {
+  const pctReal = DATA.delivered_pct_total;
+  const pctExp  = DATA.expected_pct_total;
+  document.getElementById('gaugeValue').textContent = vfmt(pctReal) + '%';
+  document.getElementById('gaugeSub').textContent =
+    DATA.delivered_stories + ' telas válidas · ' + DATA.escopo_total_stories + ' telas no escopo total da campanha';
+  document.getElementById('gaugeExpVal').textContent = vfmt(pctExp) + '%';
+  document.getElementById('gaugeExpSub').textContent = '1 de ' + DATA.semanas_totais + ' semanas · ' + DATA.expected_s1 + ' telas';
+  const realEl = document.getElementById('gaugeRealVal');
+  realEl.textContent = vfmt(pctReal) + '%';
+  realEl.classList.toggle('over', pctReal >= pctExp);
+  document.getElementById('gaugeRealSub').textContent = DATA.delivered_stories + ' telas válidas (mín. 3/creator)';
+
+  const wd = DATA.week_detail;
+  const adh = wd.adherence_pct;
+  document.getElementById('wdExpectedVal').textContent = DATA.expected_s1;
+  document.getElementById('wdDeliveredVal').textContent = DATA.delivered_stories;
+  document.getElementById('wdAdhVal').textContent = Math.round(adh) + '%';
+  document.getElementById('wdAdhValBar').textContent = Math.round(adh) + '%';
+  document.getElementById('wdOnTimeVal').textContent = wd.em_dia_creators;
+  document.getElementById('wdOnTimeSub').textContent = 'de ' + DATA.creators_ativos + ' ativos';
+
+  const arc = document.getElementById('gaugeArc');
+  const needle = document.getElementById('gaugeNeedle');
+  setTimeout(() => {
+    const shown = Math.min(100, pctReal);
+    arc.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(.5,.1,.3,1)';
+    arc.style.strokeDashoffset = (100 - shown);
+    const angle = -90 + (shown * 1.8);
+    needle.style.transition = 'transform 1.6s cubic-bezier(.5,.1,.3,1)';
+    needle.style.transformOrigin = '200px 200px';
+    needle.style.transform = `rotate(${angle}deg)`;
+    const fill = document.getElementById('adherenceFill');
+    if (fill) fill.style.width = Math.min(100, adh) + '%';
+  }, 200);
+}
+
+/* ===== TIMELINE ===== */
+let timelineChart;
+function renderTimeline(mode='daily') {
+  window.currentTimelineMode = mode;
+  const byDate = {};
+  DATA.posts.forEach(p => {
+    if (!byDate[p.date]) byDate[p.date] = { posts: 0, views: 0 };
+    byDate[p.date].posts += 1;
+    byDate[p.date].views += (p.views||0);
+  });
+  const dates = Object.keys(byDate).sort();
+  let dp = dates.map(d => byDate[d].posts);
+  let dv = dates.map(d => byDate[d].views);
+  let postsSeries, viewsSeries;
+  if (mode === 'cumulative') {
+    let p=0, v=0;
+    postsSeries = dp.map(x => p += x);
+    viewsSeries = dv.map(x => v += x);
+  } else { postsSeries = dp; viewsSeries = dv; }
+  const labels = dates.map(d => { const [y,m,day]=d.split('-'); return `${day}/${m}`; });
+
+  const ctx = document.getElementById('timelineChart');
+  if (timelineChart) timelineChart.destroy();
+  timelineChart = new Chart(ctx, {
+    type: 'bar',
+    data: { labels, datasets: [
+      { type:'bar', label:'Posts', data:postsSeries, backgroundColor:'rgba(241,138,47,.85)', borderRadius:6, yAxisID:'y', order:2 },
+      { type:'line', label:'Views', data:viewsSeries, borderColor:'#0A2E73', backgroundColor:'rgba(10,46,115,.08)', borderWidth:2.5, tension:.35, fill:true, pointBackgroundColor:'#fff', pointBorderColor:'#0A2E73', pointBorderWidth:2, pointRadius:4, pointHoverRadius:6, yAxisID:'y1', order:1 }
+    ]},
+    options: {
+      responsive:true, maintainAspectRatio:false, interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{ position:'top', align:'end', labels:{ boxWidth:10, boxHeight:10, usePointStyle:true, font:{family:'Inter',size:12,weight:'600'}, color:'#4B5563' } },
+        tooltip:{ backgroundColor:'#0F1B33', titleFont:{family:'Inter',weight:'600'}, bodyFont:{family:'Inter'}, padding:12, cornerRadius:8, displayColors:true, callbacks:{ label:(c)=>`${c.dataset.label}: ${fmtFull(c.parsed.y)}` } }
+      },
+      scales:{
+        x:{ grid:{display:false}, ticks:{color:'#8A8676', font:{family:'Inter',size:11}} },
+        y:{ position:'left', beginAtZero:true, grid:{color:'#EFE9D4'}, ticks:{color:'#8A8676', font:{family:'Inter'}, precision:0}, title:{display:true, text:'Posts', color:'#8A8676', font:{family:'Inter',size:11,weight:'600'}} },
+        y1:{ position:'right', beginAtZero:true, grid:{display:false}, ticks:{color:'#8A8676', font:{family:'Inter'}, callback:(v)=>fmt(v)}, title:{display:true, text:'Views', color:'#8A8676', font:{family:'Inter',size:11,weight:'600'}} }
+      }
+    }
+  });
+}
+
+/* ===== FORMAT CHARTS ===== */
+let formatChart, formatPerfChart;
+function renderFormatCharts() {
+  const counts = {}, views = {};
+  DATA.posts.forEach(p => {
+    counts[p.format] = (counts[p.format]||0) + 1;
+    views[p.format] = (views[p.format]||0) + (p.views||0);
+  });
+  const labels = Object.keys(counts).filter(k => counts[k] > 0);
+  const colors = { Story:'#1A4FB0', Reel:'#F18A2F', Video:'#6B3FB0', Feed:'#E5A535', Carousel:'#1F8F5C' };
+  document.getElementById('formatChartSub').textContent = `como os ${DATA.posts.length} posts capturados estão divididos`;
+
+  const ctxA = document.getElementById('formatChart');
+  if (formatChart) formatChart.destroy();
+  formatChart = new Chart(ctxA, {
+    type:'doughnut',
+    data:{ labels, datasets:[{ data:labels.map(k=>counts[k]), backgroundColor:labels.map(k=>colors[k]||'#888'), borderColor:'#fff', borderWidth:3, hoverOffset:8 }] },
+    options:{ responsive:true, maintainAspectRatio:false, cutout:'62%',
+      plugins:{ legend:{ position:'right', labels:{ boxWidth:10, boxHeight:10, usePointStyle:true, font:{family:'Inter',size:12,weight:'500'}, color:'#4B5563' } },
+        tooltip:{ backgroundColor:'#0F1B33', padding:12, cornerRadius:8, callbacks:{ label:(c)=>{ const pct=(c.parsed/DATA.posts.length*100).toFixed(1); return `${c.label}: ${c.parsed} posts (${pct}%)`; } } } } }
+  });
+
+  const ctxB = document.getElementById('formatPerfChart');
+  if (formatPerfChart) formatPerfChart.destroy();
+  formatPerfChart = new Chart(ctxB, {
+    type:'bar',
+    data:{ labels, datasets:[{ label:'Média de views', data:labels.map(k=>counts[k]>0?Math.round(views[k]/counts[k]):0), backgroundColor:labels.map(k=>colors[k]||'#888'), borderRadius:8, barPercentage:0.6 }] },
+    options:{ responsive:true, maintainAspectRatio:false, indexAxis:'y',
+      plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'#0F1B33', padding:12, cornerRadius:8, callbacks:{ label:(c)=>`${fmtFull(c.parsed.x)} views médias` } } },
+      scales:{ x:{ beginAtZero:true, grid:{color:'#EFE9D4'}, ticks:{color:'#8A8676', font:{family:'Inter'}, callback:(v)=>fmt(v)} }, y:{ grid:{display:false}, ticks:{color:'#0F1B33', font:{family:'Inter',weight:'600'}} } } }
+  });
+}
+
+/* ===== RANKING (sem vendas) ===== */
+function renderRanking(metric='views') {
+  window.currentRankingMetric = metric;
+  const getMetric = (c) => metric === 'avg_views' ? (c.posts>0?Math.round(c.views/c.posts):0) : (c[metric]||0);
+  const sorted = [...DATA.creators].sort((a,b)=>getMetric(b)-getMetric(a));
+  const max = getMetric(sorted[0]) || 1;
+  const valFmt = { views:fmt, engagement:fmt, posts:(n)=>n+'', avg_views:fmt };
+  document.getElementById('rankingList').innerHTML = sorted.map((c,i)=>`
+    <div class="rank-row top-${i+1 <= 3 ? i+1 : ''}">
+      <div class="rank-pos">${i+1}</div>
+      <div>
+        <div class="rank-handle">${c.handle}</div>
+        <div class="rank-meta">${c.posts} posts · ${fmt(c.views)} views · ${fmt(c.engagement)} engaj.</div>
+      </div>
+      <div class="rank-bar-wrap"><div class="rank-bar"><div class="fill" style="width:${Math.max(2,(getMetric(c)/max*100))}%"></div></div></div>
+      <div class="rank-value">${valFmt[metric](getMetric(c))}</div>
+    </div>
+  `).join('');
+}
+
+/* ===== PODIOS: engajamento + vendas ===== */
+function brl(v) {
+  return 'R$ ' + Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function buildPodium(list, topId, restId, mainFn, subFn) {
+  const topEl = document.getElementById(topId);
+  const restEl = document.getElementById(restId);
+  const slots = [{pos:2,cls:'s2',medal:'2'},{pos:1,cls:'s1',medal:'1'},{pos:3,cls:'s3',medal:'3'}];
+  topEl.innerHTML = slots.map(s => {
+    const c = list[s.pos-1];
+    if (!c) return `<div class="podium-step ${s.cls} empty"><span>aguardando</span></div>`;
+    return `
+      <div class="podium-step ${s.cls}">
+        <div class="medal">${s.medal}º</div>
+        <div class="handle-name">${c.label}</div>
+        <div class="handle-val">${mainFn(c)}</div>
+        <div class="small">${subFn(c)}</div>
+      </div>`;
+  }).join('');
+  const rest = list.slice(3, 8);
+  restEl.innerHTML = rest.map((c,i)=>`
+    <div class="podium-row">
+      <div class="pos">${i+4}</div>
+      <div>
+        <div class="hndl">${c.label}</div>
+        <div style="font-size:10.5px;opacity:.6;margin-top:2px;">${subFn(c)}</div>
+      </div>
+      <div class="vl">${mainFn(c)}</div>
+    </div>`).join('');
+}
+function renderPodium() {
+  // Engajamento: creators existentes, ranqueados por engajamento
+  const eng = [...DATA.creators]
+    .filter(c => c.engagement > 0)
+    .sort((a,b)=>(b.engagement-a.engagement)||(b.views-a.views))
+    .map(c => ({ label:c.handle, engagement:c.engagement, views:c.views, posts:c.posts }));
+  buildPodium(eng, 'podiumEngTop', 'podiumEngRest',
+    c => `${fmt(c.engagement)} engaj.`,
+    c => `${fmt(c.views)} views · ${c.posts} posts`);
+
+  // Vendas: cupons de vitaminas de influenciadoras do cronograma, ranqueados por valor
+  const sales = (DATA.sales || []).map(s => ({ label:s.handle, coupon:s.coupon, value:s.value, orders:s.orders }));
+  buildPodium(sales, 'podiumSalesTop', 'podiumSalesRest',
+    c => brl(c.value),
+    c => `cupom ${c.coupon} · ${c.orders} ${c.orders === 1 ? 'compra' : 'compras'}`);
+}
+
+/* ===== STATUS GRID ===== */
+let currentStatusFilter = 'all';
+function renderStatusFilters() {
+  const counts = { all: DATA.creators.length, em_dia:0, parcial:0, atencao:0 };
+  DATA.creators.forEach(c => counts[c.status] = (counts[c.status]||0)+1);
+  const filters = [
+    { id:'all', label:'Todos' },
+    { id:'em_dia', label:'Em dia' },
+    { id:'parcial', label:'Parcial / atrasos leves' },
+    { id:'atencao', label:'Pontos de atenção' }
+  ];
+  const el = document.getElementById('statusFilters');
+  el.innerHTML = filters.map(f => `
+    <button class="fp ${f.id === currentStatusFilter ? 'active' : ''}" data-filter="${f.id}">
+      ${f.label} <span class="ct">${counts[f.id]}</span>
+    </button>
+  `).join('');
+  el.querySelectorAll('.fp').forEach(btn => {
+    btn.addEventListener('click', () => { currentStatusFilter = btn.dataset.filter; renderStatusFilters(); renderCreatorsGrid(); });
+  });
+}
+function renderCreatorsGrid() {
+  const grid = document.getElementById('creatorsGrid');
+  const items = currentStatusFilter === 'all' ? DATA.creators : DATA.creators.filter(c => c.status === currentStatusFilter);
+  const statusLabel = { em_dia:'EM DIA', parcial:'PARCIAL', atencao:'ATENÇÃO' };
+  const escopo = DATA.escopo_semanal_telas; // 3 telas/semana
+  grid.innerHTML = items.map(c => {
+    const pct = Math.min(100, c.stories/escopo*100);
+    return `
+      <div class="creator-card">
+        <div class="top">
+          <div class="handle">${c.handle}</div>
+          <span class="status-pill ${c.status}">${statusLabel[c.status]}</span>
+        </div>
+        <div class="stats">
+          <div><div class="v">${c.posts}</div><div class="l">Posts</div></div>
+          <div><div class="v">${fmt(c.views)}</div><div class="l">Views</div></div>
+          <div><div class="v">${fmt(c.engagement)}</div><div class="l">Engaj.</div></div>
+        </div>
+        <div class="progress">
+          <span>${c.stories}/${escopo} telas</span>
+          <div class="bar"><div class="fill" style="width:${pct}%"></div></div>
+          <span>${Math.round(c.stories/escopo*100)}%</span>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+/* ===== POSTS TABLE ===== */
+function renderPosts() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const fmtF = document.getElementById('formatFilter').value;
+  const platF = document.getElementById('platformFilter').value;
+  const sort = document.getElementById('sortBy').value;
+  let items = [...DATA.posts];
+  if (search) items = items.filter(p => (p.handle + ' ' + p.url).toLowerCase().includes(search));
+  if (fmtF) items = items.filter(p => p.format === fmtF);
+  if (platF) items = items.filter(p => p.platform === platF);
+  if (sort === 'date_desc') items.sort((a,b)=>b.date.localeCompare(a.date));
+  if (sort === 'date_asc') items.sort((a,b)=>a.date.localeCompare(b.date));
+  if (sort === 'views_desc') items.sort((a,b)=>(b.views||0)-(a.views||0));
+  if (sort === 'engagement_desc') items.sort((a,b)=>((b.likes+b.comments+b.saves+b.shares)||0)-((a.likes+a.comments+a.saves+a.shares)||0));
+  document.getElementById('postsCount').textContent = `${items.length} de ${DATA.posts.length} posts`;
+  document.getElementById('postsBody').innerHTML = items.map(p => {
+    const [y,m,d] = p.date.split('-');
+    return `
+      <tr>
+        <td><strong>${p.handle}</strong></td>
+        <td><span class="fmt-badge ${p.format.toLowerCase()}">${p.format}</span></td>
+        <td>${p.platform}</td>
+        <td>${d}/${m}/${y.slice(2)}</td>
+        <td class="num">${fmtFull(p.views)}</td>
+        <td class="num">${fmtFull(p.likes)}</td>
+        <td class="num">${fmtFull(p.comments)}</td>
+        <td class="num">${fmtFull(p.shares)}</td>
+        <td>${p.url ? `<a href="${p.url}" target="_blank" rel="noopener">abrir &#8599;</a>` : '<span style="opacity:.4;">—</span>'}</td>
+      </tr>`;
+  }).join('');
+}
+function setupPostsFilters() {
+  const formats = [...new Set(DATA.posts.map(p=>p.format))];
+  const platforms = [...new Set(DATA.posts.map(p=>p.platform))];
+  const fSel = document.getElementById('formatFilter');
+  const pSel = document.getElementById('platformFilter');
+  formats.forEach(f => fSel.innerHTML += `<option value="${f}">${f}</option>`);
+  platforms.forEach(p => pSel.innerHTML += `<option value="${p}">${p}</option>`);
+  ['searchInput','formatFilter','platformFilter','sortBy'].forEach(id => {
+    document.getElementById(id).addEventListener('input', renderPosts);
+    document.getElementById(id).addEventListener('change', renderPosts);
+  });
+}
+
+/* ===== TABS ===== */
+function setupTabs() {
+  document.querySelectorAll('#rankTabs .tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('#rankTabs .tab').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active'); renderRanking(t.dataset.rk);
+    });
+  });
+  document.querySelectorAll('#timelineTabs .tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('#timelineTabs .tab').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active'); renderTimeline(t.dataset.tl);
+    });
+  });
+}
+
+/* ===== INIT ===== */
+renderWeekNav();
+renderKPIs();
+renderCrosscheck();
+renderHighlights();
+renderGauge();
+try { renderTimeline(); } catch(e){ console.warn('timeline:', e.message); }
+try { renderFormatCharts(); } catch(e){ console.warn('format:', e.message); }
+renderRanking('views');
+renderPodium();
+renderStatusFilters();
+renderCreatorsGrid();
+setupPostsFilters();
+renderPosts();
+setupTabs();
+
+if (typeof Chart === 'undefined') {
+  const retry = () => {
+    if (typeof Chart !== 'undefined') { try { renderTimeline(window.currentTimelineMode||'daily'); } catch(e){} try { renderFormatCharts(); } catch(e){} }
+    else setTimeout(retry, 500);
+  };
+  setTimeout(retry, 500);
+}
+</script>
+</body>
+</html>
